@@ -4,7 +4,7 @@
   "description": "mini project to practice automatic testing",
   "main": "cheat_sheet.js",
   "scripts": {
-    "test": "test"
+    "test": "jest"
   },
   "repository": {
     "type": "git",
