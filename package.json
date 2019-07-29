@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "mini project to practice automatic testing",
   "main": "cheat_sheet.js",
+  "jest": {
+    "preset": "jest-puppeteer"
+  },
   "scripts": {
     "test": "jest"
   },
