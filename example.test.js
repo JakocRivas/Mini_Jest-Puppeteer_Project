@@ -1,3 +1,4 @@
+// import {} = require('./patht')
 test();
 
 // test("nothing", () => {
