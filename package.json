@@ -2,7 +2,7 @@
   "name": "mini_selenium_project",
   "version": "1.0.0",
   "description": "mini project to practice automatic testing",
-  "main": "txt.js",
+  "main": "cheat_sheet.js",
   "scripts": {
     "test": "test"
   },
@@ -17,9 +17,9 @@
   },
   "homepage": "https://github.com/poptart-o/Mini_Selenium_Project#readme",
   "devDependencies": {
-    "jest": "^24.8.0"
-  },
-  "dependencies": {
+    "jest": "^24.8.0",
+    "jest-puppeteer": "^4.3.0",
     "puppeteer": "^1.19.0"
-  }
+  },
+  "dependencies": {}
 }
