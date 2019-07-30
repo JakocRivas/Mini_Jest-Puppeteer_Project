@@ -1,5 +1,5 @@
 // import {} = require('./patht')
-// test();
+test();
 
 // test("nothing", () => {
 //   console.log("hola");
