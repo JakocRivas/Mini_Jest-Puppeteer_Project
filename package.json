@@ -4,8 +4,7 @@
   "description": "mini project to practice automatic testing",
   "main": "cheat_sheet.js",
   "jest": {
-    "preset": "jest-puppeteer",
-    "verbose": true
+    "preset": "jest-puppeteer"
   },
   "scripts": {
     "test": "jest"
