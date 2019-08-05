@@ -7,7 +7,9 @@
     "preset": "jest-puppeteer"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "watch": "jest --watchAll",
+    "openHandles": "jest --detectOpenHandles"
   },
   "repository": {
     "type": "git",
