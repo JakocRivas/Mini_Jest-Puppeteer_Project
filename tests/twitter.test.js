@@ -1,4 +1,4 @@
-describe("Basic", () => {
+describe("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
   });
