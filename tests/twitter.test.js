@@ -49,7 +49,7 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  test("should create post", async () => {
+  test("should a post", async () => {
     const commentBoxTimeline =
       "#react-root > div > div > div > main > div > div.css-1dbjc4n.r-aqfbo4.r-1niwhzg.r-16y2uox > div > div.css-1dbjc4n.r-14lw9ot.r-1tlfku8.r-1ljd8xs.r-13l2t4g.r-1phboty.r-1jgb5lz.r-1ye8kvj.r-13qz1uu.r-184en5c > div > div > a > div.css-1dbjc4n.r-1awozwy.r-1iusvr4.r-18u37iz.r-46vdb2.r-1wbh5a2.r-1wtj0ep.r-1n0xq6e.r-bcqeeo > div > div";
     await page.waitForSelector(commentBoxTimeline);
