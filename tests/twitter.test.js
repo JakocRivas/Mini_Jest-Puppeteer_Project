@@ -49,9 +49,21 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  // test("creates post", async () => {
-  //   const
-  // })
+  test("should create post", async () => {
+    const commentBoxTimeline =
+      "#react-root > div > div > div > main > div > div.css-1dbjc4n.r-aqfbo4.r-1niwhzg.r-16y2uox > div > div.css-1dbjc4n.r-14lw9ot.r-1tlfku8.r-1ljd8xs.r-13l2t4g.r-1phboty.r-1jgb5lz.r-1ye8kvj.r-13qz1uu.r-184en5c > div > div > a > div.css-1dbjc4n.r-1awozwy.r-1iusvr4.r-18u37iz.r-46vdb2.r-1wbh5a2.r-1wtj0ep.r-1n0xq6e.r-bcqeeo > div > div";
+    await page.waitForSelector(commentBoxTimeline);
+    await page.click(commentBoxTimeline);
+
+    const commentModal =
+      "#react-root > div > div > div.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-184en5c > div > div > div > div > div.css-1dbjc4n.r-1habvwh.r-18u37iz.r-1pi2tsx.r-1777fci.r-1xcajam.r-ipm5af.r-g6jmlv > div.css-1dbjc4n.r-t23y2h.r-1wbh5a2.r-rsyp9y.r-1pjcn9w.r-htvplk.r-1udh08x.r-1potc6q";
+    await page.waitForSelector(commentModal);
+
+    const commentBoxModal =
+      "#react-root > div > div > div.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-184en5c > div > div > div > div > div.css-1dbjc4n.r-1habvwh.r-18u37iz.r-1pi2tsx.r-1777fci.r-1xcajam.r-ipm5af.r-g6jmlv > div.css-1dbjc4n.r-t23y2h.r-1wbh5a2.r-rsyp9y.r-1pjcn9w.r-htvplk.r-1udh08x.r-1potc6q > div > div.css-1dbjc4n.r-16y2uox.r-1wbh5a2.r-1jgb5lz.r-1ye8kvj.r-13qz1uu > div > div > div:nth-child(1) > div > div > div > div.css-1dbjc4n.r-1iusvr4.r-46vdb2.r-117bsoe.r-1ozfoo7.r-bcqeeo.r-1bylmt5.r-13tjlyg.r-7qyjyx.r-1ftll1t > div.css-1dbjc4n.r-184en5c > div > div > div > div > div > div > div";
+    await page.waitForSelector(commentBoxModal);
+    await page.click(commentBoxModal);
+  });
 });
 
 // describe("Twitter", () => {
