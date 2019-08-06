@@ -13,7 +13,7 @@ describe("Twitter", () => {
     await expect(h1).toBe("See what’s happening in the world right now");
   });
 
-  test("should log in", async () => {
+  test("should log in and check if redirects to the timeline", async () => {
     const email = "testyboiint@gmail.com";
     const password = "welcome1234";
 
