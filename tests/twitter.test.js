@@ -1,4 +1,4 @@
-var signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
+const signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
 
 describe("Twitter", () => {
   beforeAll(async () => {
