@@ -1,6 +1,7 @@
 var h1PageObject = {
-  h1:
-    "#doc > div > div.StaticLoggedOutHomePage-content > div.StaticLoggedOutHomePage-cell.StaticLoggedOutHomePage-utilityBlock > div.StaticLoggedOutHomePage-signupBlock > h1"
+  h1Selector:
+    "#doc > div > div.StaticLoggedOutHomePage-content > div.StaticLoggedOutHomePage-cell.StaticLoggedOutHomePage-utilityBlock > div.StaticLoggedOutHomePage-signupBlock > h1",
+  h1Text: "See what’s happening in the world right now"
 };
 
 function h1TwitterHomepage() {

@@ -7,9 +7,12 @@ describe("Twitter", () => {
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
-    const h1 = await page.$eval(signupTitle.h1, text => text.textContent);
+    const h1 = await page.$eval(
+      signupTitle.h1Selector,
+      text => text.textContent
+    );
     // const text = await page.evaluate(() => document.body.textContent);
-    await expect(h1).toBe("See what’s happening in the world right now");
+    await expect(h1).toBe(signupTitle.h1Text);
   });
 
   test("should log in and check if redirects to the timeline", async () => {
