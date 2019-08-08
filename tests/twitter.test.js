@@ -1,3 +1,5 @@
+var signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
+
 describe("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
@@ -5,10 +7,7 @@ describe("Twitter", () => {
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
-    const h1 = await page.$eval(
-      "#doc > div > div.StaticLoggedOutHomePage-content > div.StaticLoggedOutHomePage-cell.StaticLoggedOutHomePage-utilityBlock > div.StaticLoggedOutHomePage-signupBlock > h1",
-      text => text.textContent
-    );
+    const h1 = await page.$eval(signupTitle.h1, text => text.textContent);
     // const text = await page.evaluate(() => document.body.textContent);
     await expect(h1).toBe("See what’s happening in the world right now");
   });
