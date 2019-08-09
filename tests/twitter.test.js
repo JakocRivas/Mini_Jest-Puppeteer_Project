@@ -3,7 +3,7 @@ const signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
 describe("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
-    await page.setViewport({ width: 1920, height: 1080 });
+    await page.setViewport({ width: 1366, height: 768 });
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
@@ -51,20 +51,29 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  test("should a post", async () => {
+  test("should post a message", async () => {
     const commentBoxTimeline =
-      "#react-root > div > div > div > main > div > div.css-1dbjc4n.r-aqfbo4.r-1niwhzg.r-16y2uox > div > div.css-1dbjc4n.r-14lw9ot.r-1tlfku8.r-1ljd8xs.r-13l2t4g.r-1phboty.r-1jgb5lz.r-1ye8kvj.r-13qz1uu.r-184en5c > div > div > a > div.css-1dbjc4n.r-1awozwy.r-1iusvr4.r-18u37iz.r-46vdb2.r-1wbh5a2.r-1wtj0ep.r-1n0xq6e.r-bcqeeo > div > div";
+      '#react-root main[role=main] a[aria-label="Compose new Tweet"] div[dir=auto] span';
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
 
-    const commentModal =
-      "#react-root > div > div > div.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-184en5c > div > div > div > div > div.css-1dbjc4n.r-1habvwh.r-18u37iz.r-1pi2tsx.r-1777fci.r-1xcajam.r-ipm5af.r-g6jmlv > div.css-1dbjc4n.r-t23y2h.r-1wbh5a2.r-rsyp9y.r-1pjcn9w.r-htvplk.r-1udh08x.r-1potc6q";
+    const commentModal = "#react-root div[aria-labelledby=modal-header]";
     await page.waitForSelector(commentModal);
 
     const commentBoxModal =
-      "#react-root > div > div > div.r-1d2f490.r-u8s1d.r-zchlnj.r-ipm5af.r-184en5c > div > div > div > div > div.css-1dbjc4n.r-1habvwh.r-18u37iz.r-1pi2tsx.r-1777fci.r-1xcajam.r-ipm5af.r-g6jmlv > div.css-1dbjc4n.r-t23y2h.r-1wbh5a2.r-rsyp9y.r-1pjcn9w.r-htvplk.r-1udh08x.r-1potc6q > div > div.css-1dbjc4n.r-16y2uox.r-1wbh5a2.r-1jgb5lz.r-1ye8kvj.r-13qz1uu > div > div > div:nth-child(1) > div > div > div > div.css-1dbjc4n.r-1iusvr4.r-46vdb2.r-117bsoe.r-1ozfoo7.r-bcqeeo.r-1bylmt5.r-13tjlyg.r-7qyjyx.r-1ftll1t > div.css-1dbjc4n.r-184en5c > div > div > div > div > div > div > div";
+      "#react-root div[aria-labelledby=modal-header] .public-DraftStyleDefault-block";
     await page.waitForSelector(commentBoxModal);
     await page.click(commentBoxModal);
+    let comment = "a post";
+    await page.type("div.DraftEditor-root", comment);
+
+    const sendMessageButton = "#react-root div[data-testid=tweetButton]";
+    await page.waitForSelector(sendMessageButton);
+    await page.click(sendMessageButton);
+
+    await page.waitForSelector(
+      '#react-root main[role=main] div[data-testid="primaryColumn"] section[role] article div[lang=en] span'
+    );
   });
 });
 
