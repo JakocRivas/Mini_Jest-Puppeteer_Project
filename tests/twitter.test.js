@@ -11,6 +11,10 @@ describe("Twitter", () => {
     await page.setViewport({ width: 1366, height: 768 });
   });
 
+  // beforeEach(async () => {
+  //   await page.waitFor(8000);
+  // });
+
   it('should display "See what’s happening in the world right now" text on page', async () => {
     const h1 = await page.$eval(
       signupTitle.h1Selector,
@@ -56,7 +60,7 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  xit("should post a message", async () => {
+  it("should post a message", async () => {
     const commentBoxTimeline =
       '#react-root main[role=main] a[aria-label="Compose new Tweet"] div[dir=auto] span';
     await page.waitForSelector(commentBoxTimeline);
@@ -74,6 +78,8 @@ describe("Twitter", () => {
 
     const sendMessageButton = "#react-root div[data-testid=tweetButton]";
     await page.waitForSelector(sendMessageButton);
+    // await page.click(sendMessageButton);
+    // await page.waitFor(1000);
 
     await Promise.all([
       page.waitForNavigation(),
@@ -89,12 +95,17 @@ describe("Twitter", () => {
   test("should delete message", async () => {
     // await page.waitForSelector("div[data-testid=tweet] div[data-testid=caret]");
     // await page.click("div[data-testid=tweet] div[data-testid=caret]");
+    // jest.setTimeout(50000);
+
     const downArrow = "div[data-testid=tweet] div[data-testid=caret]";
 
     await page.waitForSelector(downArrow);
+
     await page.click(downArrow);
 
     const deleteButton = 'div[role="menu"] div[role="button"]';
+
+    await page.waitFor(1000);
 
     await page.waitForSelector(deleteButton);
 
