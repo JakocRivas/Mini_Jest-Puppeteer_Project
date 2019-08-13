@@ -11,16 +11,11 @@ describe("Twitter", () => {
     await page.setViewport({ width: 1366, height: 768 });
   });
 
-  // beforeEach(async () => {
-  //   await page.waitFor(8000);
-  // });
-
   it('should display "See what’s happening in the world right now" text on page', async () => {
     const h1 = await page.$eval(
       signupTitle.h1Selector,
       text => text.textContent
     );
-    // const text = await page.evaluate(() => document.body.textContent);
     await expect(h1).toBe(signupTitle.h1Text);
   });
 
@@ -78,8 +73,6 @@ describe("Twitter", () => {
 
     const sendMessageButton = "#react-root div[data-testid=tweetButton]";
     await page.waitForSelector(sendMessageButton);
-    // await page.click(sendMessageButton);
-    // await page.waitFor(1000);
 
     await Promise.all([
       page.waitForNavigation(),
@@ -93,10 +86,6 @@ describe("Twitter", () => {
   });
 
   test("should delete message", async () => {
-    // await page.waitForSelector("div[data-testid=tweet] div[data-testid=caret]");
-    // await page.click("div[data-testid=tweet] div[data-testid=caret]");
-    // jest.setTimeout(50000);
-
     const downArrow = "div[data-testid=tweet] div[data-testid=caret]";
 
     await page.waitForSelector(downArrow);
@@ -118,40 +107,5 @@ describe("Twitter", () => {
     await page.click(deleButtonModal);
 
     await page.waitFor(2000);
-
-    // await page.evaluate(
-    //   deleteButton => document.querySelector(deleteButton).click(),
-    //   deleteButton
-    // );
-    // const deleteButton = "#react-root  div[role=menu] div[role=button] span";
-    // const downArrowMenu = "#react-root  div[role=menu]";
-    // await page.waitFor(10000);
-    // await page.waitForSelector(downArrowMenu);
-    // await page.click(deleteButton);
   });
 });
-
-// describe("Twitter", () => {
-//   beforeAll(async () => {
-//     await page.goto("https://twitter.com/");
-//   });
-
-//   it('should display "twitter" text on page', async () => {
-//     await expect(page).toMatch("twitter");
-//   });
-// });
-
-// it("should open a new page", async () => {
-//   let page = await browser.newPage();
-//   await page.goto("https://google.com");
-// });
-
-// it("should open a new page", async () => {
-//   // const page = await browser.newPage();
-//   await page.goto("https://google.com");
-// });
-
-// it("should fill an input", async () => {
-//   await page.waitForSelector(".gLFyf");
-//   await page.type(".gLFyf", "Hello");
-// });
