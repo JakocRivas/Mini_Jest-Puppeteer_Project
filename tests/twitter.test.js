@@ -1,9 +1,9 @@
 const signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
 
-const testAtrr = (something, attr) => {
-  const wrapper = `[data-test=''${attr}']`;
-  return wrapper;
-};
+// const testAtrr = (something, attr) => {
+//   const wrapper = `[data-test=''${attr}']`;
+//   return wrapper;
+// };
 
 describe("Twitter", () => {
   beforeAll(async () => {
@@ -57,7 +57,7 @@ describe("Twitter", () => {
 
   it("should post a message", async () => {
     const commentBoxTimeline =
-      '#react-root main[role=main] a[aria-label="Compose new Tweet"] div[dir=auto] span';
+      '#react-root main[role="main"] div[data-testid="primaryColumn"] a[aria-label="Compose new Tweet"] span';
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
 
@@ -107,5 +107,17 @@ describe("Twitter", () => {
     await page.click(deleButtonModal);
 
     await page.waitFor(2000);
+  });
+
+  test("searches for people", async () => {
+    const searchBar =
+      '#react-root main[role="main"] form[role="search"] input[data-testid="SearchBox_Search_Input"]';
+    await page.waitForSelector(searchBar);
+
+    await page.click(searchBar);
+    const person = "@css";
+
+    await page.type(searchBar, person);
+    await page.keyboard.press("Enter");
   });
 });
