@@ -1,5 +1,10 @@
 const signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
 
+const testAtrr = (something, attr) => {
+  const wrapper = `[data-test=''${attr}']`;
+  return wrapper;
+};
+
 describe("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
@@ -51,7 +56,7 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  test("should post a message", async () => {
+  xit("should post a message", async () => {
     const commentBoxTimeline =
       '#react-root main[role=main] a[aria-label="Compose new Tweet"] div[dir=auto] span';
     await page.waitForSelector(commentBoxTimeline);
@@ -69,11 +74,49 @@ describe("Twitter", () => {
 
     const sendMessageButton = "#react-root div[data-testid=tweetButton]";
     await page.waitForSelector(sendMessageButton);
-    await page.click(sendMessageButton);
+
+    await Promise.all([
+      page.waitForNavigation(),
+      await page.click(sendMessageButton),
+      page.waitForNavigation()
+    ]);
 
     await page.waitForSelector(
       '#react-root main[role=main] div[data-testid="primaryColumn"] section[role] article div[lang=en] span'
     );
+  });
+
+  test("should delete message", async () => {
+    // await page.waitForSelector("div[data-testid=tweet] div[data-testid=caret]");
+    // await page.click("div[data-testid=tweet] div[data-testid=caret]");
+    const downArrow = "div[data-testid=tweet] div[data-testid=caret]";
+
+    await page.waitForSelector(downArrow);
+    await page.click(downArrow);
+
+    const deleteButton = 'div[role="menu"] div[role="button"]';
+
+    await page.waitForSelector(deleteButton);
+
+    await page.click(deleteButton);
+
+    const deleButtonModal = 'div[data-testid="confirmationSheetConfirm"]';
+
+    await page.waitForSelector(deleButtonModal);
+
+    await page.click(deleButtonModal);
+
+    await page.waitFor(2000);
+
+    // await page.evaluate(
+    //   deleteButton => document.querySelector(deleteButton).click(),
+    //   deleteButton
+    // );
+    // const deleteButton = "#react-root  div[role=menu] div[role=button] span";
+    // const downArrowMenu = "#react-root  div[role=menu]";
+    // await page.waitFor(10000);
+    // await page.waitForSelector(downArrowMenu);
+    // await page.click(deleteButton);
   });
 });
 
