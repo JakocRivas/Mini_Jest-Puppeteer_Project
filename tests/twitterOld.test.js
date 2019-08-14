@@ -146,22 +146,6 @@ describe("Twitter", () => {
 
     await page.click(searchedPerson);
 
-    const profileName =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-name";
-    const accountName =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname";
-    const bio =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-bio";
-    const location =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-location";
-    const personalSite =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-url";
-    const joinDate =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate";
-
-    const navInformation =
-      '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
-
     // const searchedFor =
     //   '#react-root main[role="main"] div[data-testid="primaryColumn"] section[role="region"] div[data-testid="UserCell"] a[role="link"] span span';
 
@@ -169,5 +153,28 @@ describe("Twitter", () => {
     // await page.click(searchedFor);
 
     // await page.waitFor(9000);
+  });
+
+  it("should get information of the profile", async () => {
+    const profileName =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-name";
+
+    const accountName =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname";
+
+    const bio =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-bio";
+
+    const location =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-location";
+
+    const personalSite =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-url";
+
+    const joinDate =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate";
+
+    const navInformation =
+      '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
   });
 });
