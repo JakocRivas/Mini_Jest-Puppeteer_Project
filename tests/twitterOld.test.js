@@ -198,10 +198,10 @@ describe("Twitter", () => {
       const likesNumber = numberOfACtions[3].innerText;
 
       //puts the data inside and object
-      var tweets = { Tweets: tweetNumber };
-      var following = { Following: followingNumber };
-      var followers = { Followers: followersNumber };
-      var likes = { Likes: likesNumber };
+      const tweets = { Tweets: tweetNumber };
+      const following = { Following: followingNumber };
+      const followers = { Followers: followersNumber };
+      const likes = { Likes: likesNumber };
 
       //push the data to a json
       information.push(tweets);
