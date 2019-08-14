@@ -44,8 +44,7 @@ describe("Twitter", () => {
     await page.waitForSelector(submitButton);
     await page.click(submitButton);
 
-    const home =
-      "#react-root > div > div > div > main > div > div.css-1dbjc4n.r-aqfbo4.r-1niwhzg.r-16y2uox > div > div.css-1dbjc4n.r-14lw9ot.r-1tlfku8.r-1ljd8xs.r-13l2t4g.r-1phboty.r-1jgb5lz.r-1ye8kvj.r-13qz1uu.r-184en5c > div > div > div.css-1dbjc4n.r-aqfbo4.r-14lw9ot.r-my5ep6.r-rull8r.r-qklmqi.r-gtdqiz.r-ipm5af.r-1g40b8q > div.css-1dbjc4n.r-1loqt21.r-136ojw6 > div > div > div > div > div.css-1dbjc4n.r-16y2uox.r-1wbh5a2.r-1pi2tsx.r-1777fci > div > h2 > span";
+    const home = '#doc div.global-nav div[role="navigation"] li.home span.text';
     await page.waitForSelector(home);
 
     const timeline = await page.evaluate(home => {
@@ -57,42 +56,64 @@ describe("Twitter", () => {
 
   it("should post a message", async () => {
     const commentBoxTimeline =
-      '#react-root main[role="main"] div[data-testid="primaryColumn"] a[aria-label="Compose new Tweet"] span';
+      '#doc div[role="main"] div.timeline-tweet-box div.tweet-content div[role="textbox"]';
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
 
-    const commentModal = "#react-root div[aria-labelledby=modal-header]";
-    await page.waitForSelector(commentModal);
+    // const commentModal = "#react-root div[aria-labelledby=modal-header]";
+    // await page.waitForSelector(commentModal);
 
-    const commentBoxModal =
-      "#react-root div[aria-labelledby=modal-header] .public-DraftStyleDefault-block";
-    await page.waitForSelector(commentBoxModal);
-    await page.click(commentBoxModal);
-    let comment = "a post";
-    await page.type("div.DraftEditor-root", comment);
+    // const commentBoxModal =
+    //   "#react-root div[aria-labelledby=modal-header] .public-DraftStyleDefault-block";
+    // await page.waitForSelector(commentBoxModal);
+    // await page.click(commentBoxModal);
 
-    const sendMessageButton = "#react-root div[data-testid=tweetButton]";
+    function makeid(length) {
+      var result = "";
+      var characters =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      var charactersLength = characters.length;
+      for (var i = 0; i < length; i++) {
+        result += characters.charAt(
+          Math.floor(Math.random() * charactersLength)
+        );
+      }
+      return result;
+    }
+
+    makeid(5);
+    let comment = makeid(5);
+    await page.type(commentBoxTimeline, comment);
+
+    page.waitFor(1000);
+
+    const sendMessageButton =
+      '#doc div[role="main"] div.timeline-tweet-box button.tweet-action';
     await page.waitForSelector(sendMessageButton);
 
-    await Promise.all([
-      page.waitForNavigation(),
-      await page.click(sendMessageButton),
-      page.waitForNavigation()
-    ]);
+    await page.click(sendMessageButton);
+
+    // await Promise.all([
+    //   page.waitForNavigation(),
+    //   ,
+    //   page.waitForNavigation()
+    // ]);
 
     await page.waitForSelector(
-      '#react-root main[role=main] div[data-testid="primaryColumn"] section[role] article div[lang=en] span'
+      '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"]'
     );
   });
 
-  test("should delete message", async () => {
-    const downArrow = "div[data-testid=tweet] div[data-testid=caret]";
+  it("should delete message", async () => {
+    const downArrow =
+      '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"] div.stream-item-header .dropdown';
 
     await page.waitForSelector(downArrow);
 
     await page.click(downArrow);
 
-    const deleteButton = 'div[role="menu"] div[role="button"]';
+    const deleteButton =
+      '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"] div.stream-item-header .dropdown  ul[role="menu"] .js-actionDelete button';
 
     await page.waitFor(1000);
 
@@ -100,7 +121,8 @@ describe("Twitter", () => {
 
     await page.click(deleteButton);
 
-    const deleButtonModal = 'div[data-testid="confirmationSheetConfirm"]';
+    const deleButtonModal =
+      "#delete-tweet-dialog .modal-footer button.delete-action";
 
     await page.waitForSelector(deleButtonModal);
 
@@ -109,7 +131,7 @@ describe("Twitter", () => {
     await page.waitFor(2000);
   });
 
-  test("searches for people", async () => {
+  xit("searches for people", async () => {
     const searchBar =
       '#react-root main[role="main"] form[role="search"] input[data-testid="SearchBox_Search_Input"]';
 
