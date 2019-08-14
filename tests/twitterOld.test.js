@@ -16,7 +16,7 @@ describe("Twitter", () => {
       signupTitle.h1Selector,
       text => text.textContent
     );
-    await expect(h1).toBe(signupTitle.h1Text);
+    expect(h1).toBe(signupTitle.h1Text);
   });
 
   test("should log in and check if redirects to the timeline", async () => {
@@ -60,14 +60,6 @@ describe("Twitter", () => {
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
 
-    // const commentModal = "#react-root div[aria-labelledby=modal-header]";
-    // await page.waitForSelector(commentModal);
-
-    // const commentBoxModal =
-    //   "#react-root div[aria-labelledby=modal-header] .public-DraftStyleDefault-block";
-    // await page.waitForSelector(commentBoxModal);
-    // await page.click(commentBoxModal);
-
     function makeid(length) {
       var result = "";
       var characters =
@@ -83,9 +75,10 @@ describe("Twitter", () => {
 
     makeid(5);
     let comment = makeid(5);
+    await page.waitFor(2000);
     await page.type(commentBoxTimeline, comment);
 
-    page.waitFor(1000);
+    await page.waitFor(2000);
 
     const sendMessageButton =
       '#doc div[role="main"] div.timeline-tweet-box button.tweet-action';
@@ -131,9 +124,8 @@ describe("Twitter", () => {
     await page.waitFor(2000);
   });
 
-  xit("searches for people", async () => {
-    const searchBar =
-      '#react-root main[role="main"] form[role="search"] input[data-testid="SearchBox_Search_Input"]';
+  it("searches for people", async () => {
+    const searchBar = '#doc div[role="search"] input[type="text"].search-input';
 
     await page.waitForSelector(searchBar);
 
@@ -141,16 +133,41 @@ describe("Twitter", () => {
     const person = "@css";
 
     await page.type(searchBar, person);
-    await page.keyboard.press("Enter");
+    await page.waitFor(2000);
+    // await page.keyboard.press("Enter");
+    // const searchIcon =
+    //   '#doc div[role="search"] .search-icon button[type="submit"].Icon--search';
+    // page.click(searchIcon);
 
-    await page.waitFor(5000);
+    const searchedPerson =
+      '#doc div[role="search"] div[role="listbox"] li span.username';
 
-    const searchedFor =
-      '#react-root main[role="main"] div[data-testid="primaryColumn"] section[role="region"] div[data-testid="UserCell"] a[role="link"] span span';
+    await page.waitForSelector(searchedPerson);
+
+    await page.click(searchedPerson);
+
+    const profileName =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-name";
+    const accountName =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname";
+    const bio =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-bio";
+    const location =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-location";
+    const personalSite =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-url";
+    const joinDate =
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate";
+
+    const navInformation =
+      '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
+
+    // const searchedFor =
+    //   '#react-root main[role="main"] div[data-testid="primaryColumn"] section[role="region"] div[data-testid="UserCell"] a[role="link"] span span';
 
     // await page.waitForSelector(searchedFor);
     // await page.click(searchedFor);
 
-    await page.waitFor(10000);
+    // await page.waitFor(9000);
   });
 });
