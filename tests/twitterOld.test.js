@@ -156,21 +156,27 @@ describe("Twitter", () => {
   });
 
   it("should get information of the profile", async () => {
+    //user .textContent on this
     const profileName =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-name";
 
+    //user .textContent on this
     const accountName =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname";
+      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname span";
 
+    //user .textContent on this
     const bio =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-bio";
 
+    //user .innerText on this
     const location =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-location";
 
+    //user .innerText on this
     const personalSite =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-url";
 
+    //user .innerText on this
     const joinDate =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate";
 
