@@ -158,7 +158,7 @@ describe("Twitter", () => {
   it("should get information of the profile", async () => {
     //user .textContent on this
     const profileName =
-      "#page-container .AppContainer .ProfileHeaderCard .ProfileSidebar .ProfileHeaderCard-name";
+      "#page-container .AppContainer .ProfileHeaderCard .ProfileHeaderCard-name";
 
     //user .textContent on this
     const accountName =
@@ -179,38 +179,64 @@ describe("Twitter", () => {
     //user .innerText on this
     const joinDate =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate";
+
     const navInformation =
       '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
     await page.waitForSelector(navInformation);
+    await page.waitForSelector(profileName);
 
-    let numberOfActions = await page.evaluate(() => {
-      const navInformation =
-        '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
+    let numberOfActions = await page.evaluate(
+      (navInformation, profileName) => {
+        let information = [];
+        // get the information of tweets, followers, likes, and the humber of people the user follows.
+        const numberOfACtions = document.querySelectorAll(navInformation);
+
+        // get the data in variables
+        const tweetNumber = numberOfACtions[0].innerText;
+        const followingNumber = numberOfACtions[1].innerText;
+        const followersNumber = numberOfACtions[2].innerText;
+        const likesNumber = numberOfACtions[3].innerText;
+
+        //puts the data inside and object
+        const tweets = { Tweets: tweetNumber };
+        const following = { Following: followingNumber };
+        const followers = { Followers: followersNumber };
+        const likes = { Likes: likesNumber };
+
+        //push the data to a json
+        information.push(tweets);
+        information.push(following);
+        information.push(followers);
+        information.push(likes);
+        information.push({
+          nombre: document.querySelector(profileName).innerText
+        });
+
+        return JSON.parse(JSON.stringify(information));
+      },
+      navInformation,
+      profileName
+    );
+    console.log(numberOfActions);
+
+    var accountData = await page.evaluate(profileName => {
+      //user .textContent on this
 
       let information = [];
       // get the information of tweets, followers, likes, and the humber of people the user follows.
-      const numberOfACtions = document.querySelectorAll(navInformation);
+
       // get the data in variables
-      const tweetNumber = numberOfACtions[0].innerText;
-      console.log(tweetNumber);
-      const followingNumber = numberOfACtions[1].innerText;
-      const followersNumber = numberOfACtions[2].innerText;
-      const likesNumber = numberOfACtions[3].innerText;
+
+      const name = document.querySelector(profileName).innerText;
 
       //puts the data inside and object
-      const tweets = { Tweets: tweetNumber };
-      const following = { Following: followingNumber };
-      const followers = { Followers: followersNumber };
-      const likes = { Likes: likesNumber };
+      const nameText = { name: name };
 
       //push the data to a json
-      information.push(tweets);
-      information.push(following);
-      information.push(followers);
-      information.push(likes);
+      information.push(nameText);
 
-      return information;
-    });
-    console.log(numberOfActions);
+      return JSON.parse(JSON.stringify(information));
+    }, profileName);
+    console.log(accountData);
   });
 });
