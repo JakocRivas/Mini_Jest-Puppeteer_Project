@@ -220,13 +220,12 @@ describe("Twitter", () => {
     console.log(numberOfActions);
 
     var accountData = await page.evaluate(profileName => {
-      //user .textContent on this
-
       let information = [];
-      // get the information of tweets, followers, likes, and the humber of people the user follows.
+      // get the information of the name, account name, description, location, site and date the account was made of the searched profile
 
-      // get the data in variables
+      // put the data inside variables
 
+      //use .innerText on this
       const name = document.querySelector(profileName).innerText;
 
       //puts the data inside and object
