@@ -156,11 +156,11 @@ describe("Twitter", () => {
   });
 
   it("should get information of the profile", async () => {
-    //user .textContent on this
+    //user .innerText on this
     const profileName =
       "#page-container .AppContainer .ProfileHeaderCard .ProfileHeaderCard-name";
 
-    //user .textContent on this
+    //user .innerText on this
     const accountName =
       "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname span";
 
@@ -184,58 +184,73 @@ describe("Twitter", () => {
       '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
     await page.waitForSelector(navInformation);
     await page.waitForSelector(profileName);
+    await page.waitForSelector(bio);
+    await page.waitForSelector(location);
+    await page.waitForSelector(personalSite);
+    await page.waitForSelector(joinDate);
 
-    let numberOfActions = await page.evaluate(
-      (navInformation, profileName) => {
+    let numberOfActions = await page.evaluate(navInformation => {
+      let information = [];
+      // get the information of tweets, followers, likes, and the humber of people the user follows.
+      const numberOfACtions = document.querySelectorAll(navInformation);
+
+      // get the data in variables
+      const tweetNumber = numberOfACtions[0].innerText;
+      const followingNumber = numberOfACtions[1].innerText;
+      const followersNumber = numberOfACtions[2].innerText;
+      const likesNumber = numberOfACtions[3].innerText;
+
+      //puts the data inside and object
+      const tweets = { Tweets: tweetNumber };
+      const following = { Following: followingNumber };
+      const followers = { Followers: followersNumber };
+      const likes = { Likes: likesNumber };
+
+      //push the data to a json
+      information.push(tweets);
+      information.push(following);
+      information.push(followers);
+      information.push(likes);
+
+      return JSON.parse(JSON.stringify(information));
+    }, navInformation);
+
+    var accountData = await page.evaluate(
+      ({ profileName, accountName, bio, location, personalSite, joinDate }) => {
         let information = [];
-        // get the information of tweets, followers, likes, and the humber of people the user follows.
-        const numberOfACtions = document.querySelectorAll(navInformation);
+        // get the information of the name, account name, description, location, site and date the account was made of the searched profile
 
-        // get the data in variables
-        const tweetNumber = numberOfACtions[0].innerText;
-        const followingNumber = numberOfACtions[1].innerText;
-        const followersNumber = numberOfACtions[2].innerText;
-        const likesNumber = numberOfACtions[3].innerText;
+        // put the data inside variables
+
+        //use .innerText on this
+        const name = document.querySelector(profileName).innerText;
+        const account = document.querySelector(accountName).innerText;
+        const biography = document.querySelector(bio).textContent;
+        const localitation = document.querySelector(location).innerText;
+        const site = document.querySelector(personalSite).innerText;
+        const dateOfCreation = document.querySelector(joinDate).innerText;
 
         //puts the data inside and object
-        const tweets = { Tweets: tweetNumber };
-        const following = { Following: followingNumber };
-        const followers = { Followers: followersNumber };
-        const likes = { Likes: likesNumber };
+        const nameText = { name: name };
+        const accountText = { account: account };
+        const bioText = { bio: biography };
+        const localitationText = { localitation: localitation };
+        const siteText = { site: site };
+        const dateText = { date: dateOfCreation };
 
         //push the data to a json
-        information.push(tweets);
-        information.push(following);
-        information.push(followers);
-        information.push(likes);
-        information.push({
-          nombre: document.querySelector(profileName).innerText
-        });
+        information.push(nameText);
+        information.push(accountText);
+        information.push(bioText);
+        information.push(localitationText);
+        information.push(siteText);
+        information.push(dateText);
 
         return JSON.parse(JSON.stringify(information));
       },
-      navInformation,
-      profileName
+      { profileName, accountName, bio, location, personalSite, joinDate }
     );
     console.log(numberOfActions);
-
-    var accountData = await page.evaluate(profileName => {
-      let information = [];
-      // get the information of the name, account name, description, location, site and date the account was made of the searched profile
-
-      // put the data inside variables
-
-      //use .innerText on this
-      const name = document.querySelector(profileName).innerText;
-
-      //puts the data inside and object
-      const nameText = { name: name };
-
-      //push the data to a json
-      information.push(nameText);
-
-      return JSON.parse(JSON.stringify(information));
-    }, profileName);
     console.log(accountData);
   });
 });
