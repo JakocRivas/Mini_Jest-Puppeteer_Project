@@ -2,6 +2,8 @@ const header = require("../PageObjects/Twitter/LoginTwitter/h1");
 const loginFields = require("../PageObjects/Twitter/LoginTwitter/loginForm");
 const loginFormButton = require("../PageObjects/Twitter/LoginTwitter/submitButton");
 const submitButton = require("../PageObjects/Twitter/LoginTwitter/loginButton");
+const commentBox = require("../PageObjects/Twitter/CommentTwitter/commentBox");
+const timeline = require("../PageObjects/Twitter/CommentTwitter/timelineComment");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -63,21 +65,18 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  xit("should post a message", async () => {
-    const commentBoxTimeline =
-      '#doc div[role="main"] div.timeline-tweet-box div.tweet-content div[role="textbox"]';
+  it("should post a message", async () => {
+    const commentBoxTimeline = commentBox.timeline;
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
 
-    makeid(5);
     let comment = makeid(5);
     await page.waitFor(2000);
     await page.type(commentBoxTimeline, comment);
 
     await page.waitFor(2000);
 
-    const sendMessageButton =
-      '#doc div[role="main"] div.timeline-tweet-box button.tweet-action';
+    const sendMessageButton = commentBox.sendMessage;
     await page.waitForSelector(sendMessageButton);
 
     await page.click(sendMessageButton);
@@ -88,9 +87,7 @@ describe("Twitter", () => {
     //   page.waitForNavigation()
     // ]);
 
-    await page.waitForSelector(
-      '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"]'
-    );
+    await page.waitForSelector(timeline.comment);
   });
 
   xit("should delete message", async () => {
