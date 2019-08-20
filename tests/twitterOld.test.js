@@ -3,7 +3,9 @@ const loginFields = require("../PageObjects/Twitter/LoginTwitter/loginForm");
 const loginFormButton = require("../PageObjects/Twitter/LoginTwitter/submitButton");
 const submitButton = require("../PageObjects/Twitter/LoginTwitter/loginButton");
 const commentBox = require("../PageObjects/Twitter/CommentTwitter/commentBox");
-const timeline = require("../PageObjects/Twitter/CommentTwitter/timelineComment");
+const timeline = require("../PageObjects/Twitter/CommentTwitter/timeline");
+const post = require("../PageObjects/Twitter/CommentTwitter/post");
+const search = require("../PageObjects/Twitter/SearchTwitter/search");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -90,16 +92,14 @@ describe("Twitter", () => {
     await page.waitForSelector(timeline.comment);
   });
 
-  xit("should delete message", async () => {
-    const downArrow =
-      '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"] div.stream-item-header .dropdown';
+  it("should delete message", async () => {
+    const downArrow = post.downArrow;
 
     await page.waitForSelector(downArrow);
 
     await page.click(downArrow);
 
-    const deleteButton =
-      '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"] div.stream-item-header .dropdown  ul[role="menu"] .js-actionDelete button';
+    const deleteButton = post.deleteButton;
 
     await page.waitFor(1000);
 
@@ -107,8 +107,7 @@ describe("Twitter", () => {
 
     await page.click(deleteButton);
 
-    const deleButtonModal =
-      "#delete-tweet-dialog .modal-footer button.delete-action";
+    const deleButtonModal = post.deleButtonModal;
 
     await page.waitForSelector(deleButtonModal);
 
@@ -117,8 +116,8 @@ describe("Twitter", () => {
     await page.waitFor(2000);
   });
 
-  xit("searches for people", async () => {
-    const searchBar = '#doc div[role="search"] input[type="text"].search-input';
+  it("searches for people", async () => {
+    const searchBar = search.searchBar;
 
     await page.waitForSelector(searchBar);
 
@@ -132,8 +131,7 @@ describe("Twitter", () => {
     //   '#doc div[role="search"] .search-icon button[type="submit"].Icon--search';
     // page.click(searchIcon);
 
-    const searchedPerson =
-      '#doc div[role="search"] div[role="listbox"] li span.username';
+    const searchedPerson = search.searchedPerson;
 
     await page.waitForSelector(searchedPerson);
 
