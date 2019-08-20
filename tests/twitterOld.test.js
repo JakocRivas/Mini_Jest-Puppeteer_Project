@@ -253,4 +253,43 @@ describe("Twitter", () => {
     console.log(numberOfActions);
     console.log(accountData);
   });
+
+  //takes a screenshot of the element
+  it("should download profile image", async () => {
+    //download
+    const jpg = "img.ProfileAvatar-image";
+    await page.waitForSelector(jpg);
+    const img = await page.$("img.ProfileAvatar-image");
+    // 'img.xyz[src]'
+    const imgSrc = await page.$eval(jpg, img => img.getAttribute("src"));
+
+    // await img.screenshot({
+    //   path: "profile-img-screenshot.jpg",
+    //   omitBackground: true
+    // });
+
+    const http = require("https");
+    const fs = require("fs");
+
+    const file = fs.createWriteStream("file.jpg");
+    // console.log(jpg.src);
+    const request = http.get(imgSrc, function(response) {
+      response.pipe(file);
+    });
+  });
 });
+// var download = function(url, dest, cb) {
+//   var file = fs.createWriteStream(dest);
+//   var request = http
+//     .get(url, function(response) {
+//       response.pipe(file);
+//       file.on("finish", function() {
+//         file.close(cb); // close() is async, call cb after close completes.
+//       });
+//     })
+//     .on("error", function(err) {
+//       // Handle errors
+//       fs.unlink(dest); // Delete the file async. (But we don't check the result)
+//       if (cb) cb(err.message);
+//     });
+// };
