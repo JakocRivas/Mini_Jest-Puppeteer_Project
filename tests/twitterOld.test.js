@@ -1,9 +1,23 @@
-const signupTitle = require("../PageObjects/Twitter/LoginTwitter/h1");
+const header = require("../PageObjects/Twitter/LoginTwitter/h1");
+const loginFields = require("../PageObjects/Twitter/LoginTwitter/loginForm");
+const loginFormButton = require("../PageObjects/Twitter/LoginTwitter/submitButton");
+const submitButton = require("../PageObjects/Twitter/LoginTwitter/loginButton");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
 //   return wrapper;
 // };
+
+function makeid(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
 
 describe("Twitter", () => {
   beforeAll(async () => {
@@ -12,28 +26,23 @@ describe("Twitter", () => {
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
-    const h1 = await page.$eval(
-      signupTitle.h1Selector,
-      text => text.textContent
-    );
-    expect(h1).toBe(signupTitle.h1Text);
+    const h1 = await page.$eval(header.h1Selector, text => text.textContent);
+    expect(h1).toBe(header.h1Text);
   });
 
   test("should log in and check if redirects to the timeline", async () => {
     const email = "testyboiint@gmail.com";
     const password = "welcome1234";
 
-    const emailField = ".js-username-field.email-input.js-initial-focus";
-    const passwordField = ".js-password-field";
+    const emailField = loginFields.emailField;
+    const passwordField = loginFields.passwordField;
 
-    const submitButton =
-      ".submit.EdgeButton.EdgeButton--primary.EdgeButtom--medium";
+    const loginButton = submitButton.selector;
 
-    const logInButton =
-      "#doc > div > div.StaticLoggedOutHomePage-content > div.StaticLoggedOutHomePage-cell.StaticLoggedOutHomePage-utilityBlock > div.StaticLoggedOutHomePage-signupBlock > div.StaticLoggedOutHomePage-noSignupForm > div > a.js-nav.EdgeButton.EdgeButton--medium.EdgeButton--secondary.StaticLoggedOutHomePage-buttonLogin";
+    const loginFieldbutton = loginFormButton.selector;
 
-    await page.waitForSelector(logInButton);
-    await page.click(logInButton);
+    await page.waitForSelector(loginButton);
+    await page.click(loginButton);
 
     await page.waitForSelector(emailField);
     await page.waitForSelector(passwordField);
@@ -41,10 +50,10 @@ describe("Twitter", () => {
     await page.type(emailField, email);
     await page.type(passwordField, password);
 
-    await page.waitForSelector(submitButton);
-    await page.click(submitButton);
+    await page.waitForSelector(loginFieldbutton);
+    await page.click(loginFieldbutton);
 
-    const home = '#doc div.global-nav div[role="navigation"] li.home span.text';
+    const home = header.home;
     await page.waitForSelector(home);
 
     const timeline = await page.evaluate(home => {
@@ -54,24 +63,11 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   });
 
-  it("should post a message", async () => {
+  xit("should post a message", async () => {
     const commentBoxTimeline =
       '#doc div[role="main"] div.timeline-tweet-box div.tweet-content div[role="textbox"]';
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
-
-    function makeid(length) {
-      var result = "";
-      var characters =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-      var charactersLength = characters.length;
-      for (var i = 0; i < length; i++) {
-        result += characters.charAt(
-          Math.floor(Math.random() * charactersLength)
-        );
-      }
-      return result;
-    }
 
     makeid(5);
     let comment = makeid(5);
@@ -97,7 +93,7 @@ describe("Twitter", () => {
     );
   });
 
-  it("should delete message", async () => {
+  xit("should delete message", async () => {
     const downArrow =
       '#doc div[role="main"] .stream-container #stream-items-id li[data-item-type="tweet"] div.stream-item-header .dropdown';
 
@@ -124,7 +120,7 @@ describe("Twitter", () => {
     await page.waitFor(2000);
   });
 
-  it("searches for people", async () => {
+  xit("searches for people", async () => {
     const searchBar = '#doc div[role="search"] input[type="text"].search-input';
 
     await page.waitForSelector(searchBar);
@@ -155,7 +151,7 @@ describe("Twitter", () => {
     // await page.waitFor(9000);
   });
 
-  it("should get information of the profile", async () => {
+  xit("should get information of the profile", async () => {
     //user .innerText on this
     const profileName =
       "#page-container .AppContainer .ProfileHeaderCard .ProfileHeaderCard-name";
@@ -255,41 +251,24 @@ describe("Twitter", () => {
   });
 
   //takes a screenshot of the element
-  it("should download profile image", async () => {
+  xit("should download profile image", async () => {
     //download
     const jpg = "img.ProfileAvatar-image";
     await page.waitForSelector(jpg);
-    const img = await page.$("img.ProfileAvatar-image");
-    // 'img.xyz[src]'
     const imgSrc = await page.$eval(jpg, img => img.getAttribute("src"));
 
     // await img.screenshot({
     //   path: "profile-img-screenshot.jpg",
     //   omitBackground: true
     // });
+    const imageName = makeid(5);
 
     const http = require("https");
     const fs = require("fs");
 
-    const file = fs.createWriteStream("file.jpg");
-    // console.log(jpg.src);
+    const file = fs.createWriteStream(imageName + ".jpg");
     const request = http.get(imgSrc, function(response) {
       response.pipe(file);
     });
   });
 });
-// var download = function(url, dest, cb) {
-//   var file = fs.createWriteStream(dest);
-//   var request = http
-//     .get(url, function(response) {
-//       response.pipe(file);
-//       file.on("finish", function() {
-//         file.close(cb); // close() is async, call cb after close completes.
-//       });
-//     })
-//     .on("error", function(err) {
-//       // Handle errors
-//       fs.unlink(dest); // Delete the file async. (But we don't check the result)
-//       if (cb) cb(err.message);
-//     });
-// };
