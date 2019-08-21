@@ -6,6 +6,8 @@ const commentBox = require("../PageObjects/Twitter/CommentTwitter/commentBox");
 const timeline = require("../PageObjects/Twitter/CommentTwitter/timeline");
 const post = require("../PageObjects/Twitter/CommentTwitter/post");
 const search = require("../PageObjects/Twitter/SearchTwitter/search");
+const profile = require("../PageObjects/Twitter/ProfileTwitter/profile");
+const credentials = require("../resources/common");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -35,8 +37,8 @@ describe("Twitter", () => {
   });
 
   test("should log in and check if redirects to the timeline", async () => {
-    const email = "testyboiint@gmail.com";
-    const password = "welcome1234";
+    const email = credentials.email;
+    const password = credentials.password;
 
     const emailField = loginFields.emailField;
     const passwordField = loginFields.passwordField;
@@ -146,33 +148,27 @@ describe("Twitter", () => {
     // await page.waitFor(9000);
   });
 
-  xit("should get information of the profile", async () => {
+  it("should get information of the profile", async () => {
     //user .innerText on this
-    const profileName =
-      "#page-container .AppContainer .ProfileHeaderCard .ProfileHeaderCard-name";
+    const profileName = profile.name;
 
     //user .innerText on this
-    const accountName =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-screenname span";
+    const accountName = profile.account;
 
     //user .textContent on this
-    const bio =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-bio";
+    const bio = profile.bio;
 
     //user .innerText on this
-    const location =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-location";
+    const location = profile.location;
 
     //user .innerText on this
-    const personalSite =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-url";
+    const personalSite = profile.personalSiteUrl;
 
     //user .innerText on this
-    const joinDate =
-      "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate";
+    const joinDate = profile.joinDate;
 
-    const navInformation =
-      '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value';
+    const navInformation = profile.navInformation;
+
     await page.waitForSelector(navInformation);
     await page.waitForSelector(profileName);
     await page.waitForSelector(bio);
@@ -246,7 +242,7 @@ describe("Twitter", () => {
   });
 
   //takes a screenshot of the element
-  xit("should download profile image", async () => {
+  it("should download profile image", async () => {
     //download
     const jpg = "img.ProfileAvatar-image";
     await page.waitForSelector(jpg);
@@ -261,7 +257,7 @@ describe("Twitter", () => {
     const http = require("https");
     const fs = require("fs");
 
-    const file = fs.createWriteStream(imageName + ".jpg");
+    const file = fs.createWriteStream("./img/" + imageName + ".jpg");
     const request = http.get(imgSrc, function(response) {
       response.pipe(file);
     });
