@@ -1,1 +1,5 @@
-module.exports = { email: "testyboiint@gmail.com", password: "welcome1234" };
+module.exports = {
+  email: "testyboiint@gmail.com",
+  password: "welcome1234",
+  imgPath: "./img/"
+};

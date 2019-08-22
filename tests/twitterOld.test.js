@@ -7,7 +7,7 @@ const timeline = require("../PageObjects/Twitter/CommentTwitter/timeline");
 const post = require("../PageObjects/Twitter/CommentTwitter/post");
 const search = require("../PageObjects/Twitter/SearchTwitter/search");
 const profile = require("../PageObjects/Twitter/ProfileTwitter/profile");
-const credentials = require("../resources/common");
+const common = require("../resources/common");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -37,8 +37,8 @@ describe("Twitter", () => {
   });
 
   test("should log in and check if redirects to the timeline", async () => {
-    const email = credentials.email;
-    const password = credentials.password;
+    const email = common.email;
+    const password = common.password;
 
     const emailField = loginFields.emailField;
     const passwordField = loginFields.passwordField;
@@ -75,10 +75,10 @@ describe("Twitter", () => {
     await page.click(commentBoxTimeline);
 
     let comment = makeid(5);
-    await page.waitFor(2000);
+    await page.waitFor(3000);
     await page.type(commentBoxTimeline, comment);
 
-    await page.waitFor(2000);
+    await page.waitFor(3000);
 
     const sendMessageButton = commentBox.sendMessage;
     await page.waitForSelector(sendMessageButton);
@@ -92,7 +92,7 @@ describe("Twitter", () => {
     // ]);
 
     await page.waitForSelector(timeline.comment);
-  });
+  }, 9000);
 
   it("should delete message", async () => {
     const downArrow = post.downArrow;
@@ -257,7 +257,7 @@ describe("Twitter", () => {
     const http = require("https");
     const fs = require("fs");
 
-    const file = fs.createWriteStream("./img/" + imageName + ".jpg");
+    const file = fs.createWriteStream(common.imgPath + imageName + ".jpg");
     const request = http.get(imgSrc, function(response) {
       response.pipe(file);
     });
