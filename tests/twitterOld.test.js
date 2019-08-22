@@ -124,7 +124,7 @@ describe("Twitter", () => {
     await page.waitForSelector(searchBar);
 
     await page.click(searchBar);
-    const person = "@css";
+    const person = common.searchTwitter;
 
     await page.type(searchBar, person);
     await page.waitFor(2000);
