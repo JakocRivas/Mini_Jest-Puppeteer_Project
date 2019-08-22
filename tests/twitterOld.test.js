@@ -252,6 +252,7 @@ describe("Twitter", () => {
     //   path: "profile-img-screenshot.jpg",
     //   omitBackground: true
     // });
+
     const imageName = makeid(5);
 
     const http = require("https");
