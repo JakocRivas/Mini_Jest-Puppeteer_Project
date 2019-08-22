@@ -1,7 +1,7 @@
-class HomePage {
+class LoginPage {
   constructor(page) {
     this.page = page;
   }
 }
 
-module.exports = HomePage;
+module.exports = LoginPage;
