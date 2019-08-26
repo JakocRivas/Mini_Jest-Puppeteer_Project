@@ -9,6 +9,7 @@ const search = require("../PageObjects/Twitter/PO/SearchTwitter/search");
 const profile = require("../PageObjects/Twitter/PO/ProfileTwitter/profile");
 const common = require("../resources/common");
 const LoginPage = require("../PageObjects/Twitter/loginPage");
+const HomePage = require("../PageObjects/Twitter/homepage");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -31,20 +32,25 @@ describe("Twitter", () => {
     await page.goto("https://twitter.com/");
     await page.setViewport({ width: 1366, height: 768 });
   });
+  beforeEach(async () => {
+    loginPage = new LoginPage();
+    homepage = new HomePage();
+  });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
     // const h1 = await page.$eval(header.h1Selector, text => text.textContent);
     // console.log(h1);
     // expect(h1).toBe(header.h1Text);
-    let loginPage = new LoginPage();
-    let nrp = await loginPage.waitForHeader();
-    console.log(nrp);
+    // let loginPage = new LoginPage();
+    // let nrp = await loginPage.waitForHeader();
+    await loginPage.waitForHeader();
+    // console.log(nrp);
 
     // await LoginPage.waitForHeader;
   });
 
   it("should log in and check if redirects to the timeline", async () => {
-    loginPage = new LoginPage();
+    // loginPage = new LoginPage();
     await loginPage.login();
 
     const timeline = await loginPage.waitForHome();
@@ -82,53 +88,51 @@ describe("Twitter", () => {
     // expect(timeline).toBe("Home");
   });
 
-  xit("should post a message", async () => {
-    const commentBoxTimeline = commentBox.timeline;
-    await page.waitForSelector(commentBoxTimeline);
-    await page.click(commentBoxTimeline);
+  it("should post a message", async () => {
+    await homepage.postMessage();
 
-    let comment = makeid(5);
-    await page.waitFor(3000);
-    await page.type(commentBoxTimeline, comment);
+    // const commentBoxTimeline = commentBox.timeline;
+    // await page.waitForSelector(commentBoxTimeline);
+    // await page.click(commentBoxTimeline);
 
-    await page.waitFor(3000);
+    // let comment = makeid(5);
+    // await page.waitFor(3000);
+    // await page.type(commentBoxTimeline, comment);
 
-    const sendMessageButton = commentBox.sendMessage;
-    await page.waitForSelector(sendMessageButton);
+    // await page.waitFor(3000);
 
-    await page.click(sendMessageButton);
+    // const sendMessageButton = commentBox.sendMessage;
+    // await page.waitForSelector(sendMessageButton);
 
-    // await Promise.all([
-    //   page.waitForNavigation(),
-    //   ,
-    //   page.waitForNavigation()
-    // ]);
+    // await page.click(sendMessageButton);
 
-    await page.waitForSelector(timeline.comment);
+    // await page.waitForSelector(timeline.comment);
   }, 9000);
 
-  xit("should delete message", async () => {
-    const downArrow = post.downArrow;
+  it("should delete message", async () => {
+    await homepage.deleteMessage();
 
-    await page.waitForSelector(downArrow);
+    // const downArrow = post.downArrow;
 
-    await page.click(downArrow);
+    // await page.waitForSelector(downArrow);
 
-    const deleteButton = post.deleteButton;
+    // await page.click(downArrow);
 
-    await page.waitFor(1000);
+    // const deleteButton = post.deleteButton;
 
-    await page.waitForSelector(deleteButton);
+    // await page.waitFor(1000);
 
-    await page.click(deleteButton);
+    // await page.waitForSelector(deleteButton);
 
-    const deleButtonModal = post.deleButtonModal;
+    // await page.click(deleteButton);
 
-    await page.waitForSelector(deleButtonModal, { visible: true });
+    // const deleButtonModal = post.deleButtonModal;
 
-    await page.click(deleButtonModal);
+    // await page.waitForSelector(deleButtonModal, { visible: true });
 
-    await page.waitFor(2000);
+    // await page.click(deleButtonModal);
+
+    // await page.waitFor(2000);
   });
 
   xit("searches for people", async () => {

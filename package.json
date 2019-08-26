@@ -12,14 +12,15 @@
     "openHandles": "jest --detectOpenHandles"
   },
   "babel": {
-    "presets": [  ],
-    "plugins": [   
+    "presets": [],
+    "plugins": [
       [
         "@babel/plugin-proposal-class-properties",
         {
           "loose": true
         }
-    ]   ]
+      ]
+    ]
   },
   "repository": {
     "type": "git",
@@ -39,7 +40,7 @@
   },
   "dependencies": {
     "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "eslint-utils": "^1.4.2",
     "jest-environment-puppeteer": "^4.3.0"
   }
-  
 }

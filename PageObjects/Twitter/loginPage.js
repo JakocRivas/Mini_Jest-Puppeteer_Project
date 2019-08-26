@@ -2,22 +2,21 @@ const header = require("./PO/LoginTwitter/h1");
 const loginFields = require("./PO/LoginTwitter/loginForm");
 const loginFormButton = require("./PO/LoginTwitter/submitButton");
 const submitButton = require("./PO/LoginTwitter/loginButton");
-// const commentBox = require("../PageObjects/Twitter/PO/CommentTwitter/commentBox");
-// const timeline = require("../PageObjects/Twitter/PO/CommentTwitter/timeline");
-// const post = require("../PageObjects/Twitter/PO/CommentTwitter/post");
-// const search = require("../PageObjects/Twitter/PO/SearchTwitter/search");
-// const profile = require("../PageObjects/Twitter/PO/ProfileTwitter/profile");
 const common = require("../../resources/common");
 
 class LoginPage {
   constructor(page) {
     this.page = page;
   }
+
+  //Waits for the h1 of the landing page to be loaded
   async waitForHeader() {
     const h1 = await page.$eval(header.h1Selector, text => text.textContent);
     expect(h1).toBe(header.h1Text);
     return h1;
   }
+
+  //Logins to twitter
   async login() {
     const email = common.email;
     const password = common.password;
@@ -41,6 +40,8 @@ class LoginPage {
     await page.waitForSelector(loginFieldbutton);
     await page.click(loginFieldbutton);
   }
+
+  //waits for the h1 of the twitter timeline to load
   async waitForHome() {
     const home = header.home;
     await page.waitForSelector(home);
