@@ -8,6 +8,7 @@ const post = require("../PageObjects/Twitter/PO/CommentTwitter/post");
 const search = require("../PageObjects/Twitter/PO/SearchTwitter/search");
 const profile = require("../PageObjects/Twitter/PO/ProfileTwitter/profile");
 const common = require("../resources/common");
+const LoginPage = require("../PageObjects/Twitter/loginPage");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -32,44 +33,56 @@ describe("Twitter", () => {
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
-    const h1 = await page.$eval(header.h1Selector, text => text.textContent);
-    expect(h1).toBe(header.h1Text);
+    // const h1 = await page.$eval(header.h1Selector, text => text.textContent);
+    // console.log(h1);
+    // expect(h1).toBe(header.h1Text);
+    let loginPage = new LoginPage();
+    let nrp = await loginPage.waitForHeader();
+    console.log(nrp);
+
+    // await LoginPage.waitForHeader;
   });
 
-  test("should log in and check if redirects to the timeline", async () => {
-    const email = common.email;
-    const password = common.password;
+  it("should log in and check if redirects to the timeline", async () => {
+    loginPage = new LoginPage();
+    await loginPage.login();
 
-    const emailField = loginFields.emailField;
-    const passwordField = loginFields.passwordField;
+    const timeline = await loginPage.waitForHome();
+    await expect(timeline).toBe("Home");
 
-    const loginButton = submitButton.selector;
+    // const email = common.email;
+    // const password = common.password;
 
-    const loginFieldbutton = loginFormButton.selector;
+    // const emailField = loginFields.emailField;
+    // const passwordField = loginFields.passwordField;
 
-    await page.waitForSelector(loginButton);
-    await page.click(loginButton);
+    // const loginButton = submitButton.selector;
 
-    await page.waitForSelector(emailField);
-    await page.waitForSelector(passwordField);
+    // const loginFieldbutton = loginFormButton.selector;
 
-    await page.type(emailField, email);
-    await page.type(passwordField, password);
+    // await page.waitForSelector(loginButton);
+    // await page.click(loginButton);
 
-    await page.waitForSelector(loginFieldbutton);
-    await page.click(loginFieldbutton);
+    // await page.waitForSelector(emailField);
+    // await page.waitForSelector(passwordField);
 
-    const home = header.home;
-    await page.waitForSelector(home);
+    // await page.type(emailField, email);
+    // await page.type(passwordField, password);
 
-    const timeline = await page.evaluate(home => {
-      return document.querySelector(home).textContent;
-    }, home);
+    // await page.waitForSelector(loginFieldbutton);
+    // await page.click(loginFieldbutton);
 
-    expect(timeline).toBe("Home");
+    // const home = header.home;
+    // await page.waitForSelector(home);
+
+    // const timeline = await page.evaluate(home => {
+    //   return document.querySelector(home).textContent;
+    // }, home);
+
+    // expect(timeline).toBe("Home");
   });
 
-  it("should post a message", async () => {
+  xit("should post a message", async () => {
     const commentBoxTimeline = commentBox.timeline;
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
@@ -94,7 +107,7 @@ describe("Twitter", () => {
     await page.waitForSelector(timeline.comment);
   }, 9000);
 
-  it("should delete message", async () => {
+  xit("should delete message", async () => {
     const downArrow = post.downArrow;
 
     await page.waitForSelector(downArrow);
@@ -111,14 +124,14 @@ describe("Twitter", () => {
 
     const deleButtonModal = post.deleButtonModal;
 
-    await page.waitForSelector(deleButtonModal);
+    await page.waitForSelector(deleButtonModal, { visible: true });
 
     await page.click(deleButtonModal);
 
     await page.waitFor(2000);
   });
 
-  it("searches for people", async () => {
+  xit("searches for people", async () => {
     const searchBar = search.searchBar;
 
     await page.waitForSelector(searchBar);
@@ -148,7 +161,7 @@ describe("Twitter", () => {
     // await page.waitFor(9000);
   });
 
-  it("should get information of the profile", async () => {
+  xit("should get information of the profile", async () => {
     //user .innerText on this
     const profileName = profile.name;
 
@@ -242,7 +255,7 @@ describe("Twitter", () => {
   });
 
   //takes a screenshot of the element
-  it("should download profile image", async () => {
+  xit("should download profile image", async () => {
     //download
     const jpg = "img.ProfileAvatar-image";
     await page.waitForSelector(jpg);
