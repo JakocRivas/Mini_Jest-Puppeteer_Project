@@ -10,6 +10,7 @@ const profile = require("../PageObjects/Twitter/PO/ProfileTwitter/profile");
 const common = require("../resources/common");
 const LoginPage = require("../PageObjects/Twitter/loginPage");
 const HomePage = require("../PageObjects/Twitter/homepage");
+const ProfilePage = require("../PageObjects/Twitter/profilePage");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -34,7 +35,8 @@ describe("Twitter", () => {
   });
   beforeEach(async () => {
     loginPage = new LoginPage();
-    homepage = new HomePage();
+    homePage = new HomePage();
+    profilePage = new ProfilePage();
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
@@ -89,7 +91,7 @@ describe("Twitter", () => {
   });
 
   it("should post a message", async () => {
-    await homepage.postMessage();
+    await homePage.postMessage();
 
     // const commentBoxTimeline = commentBox.timeline;
     // await page.waitForSelector(commentBoxTimeline);
@@ -110,7 +112,7 @@ describe("Twitter", () => {
   }, 9000);
 
   it("should delete message", async () => {
-    await homepage.deleteMessage();
+    await homePage.deleteMessage();
 
     // const downArrow = post.downArrow;
 
@@ -135,127 +137,13 @@ describe("Twitter", () => {
     // await page.waitFor(2000);
   });
 
-  xit("searches for people", async () => {
-    const searchBar = search.searchBar;
-
-    await page.waitForSelector(searchBar);
-
-    await page.click(searchBar);
-    const person = common.searchTwitter;
-
-    await page.type(searchBar, person);
-    await page.waitFor(2000);
-    // await page.keyboard.press("Enter");
-    // const searchIcon =
-    //   '#doc div[role="search"] .search-icon button[type="submit"].Icon--search';
-    // page.click(searchIcon);
-
-    const searchedPerson = search.searchedPerson;
-
-    await page.waitForSelector(searchedPerson);
-
-    await page.click(searchedPerson);
-
-    // const searchedFor =
-    //   '#react-root main[role="main"] div[data-testid="primaryColumn"] section[role="region"] div[data-testid="UserCell"] a[role="link"] span span';
-
-    // await page.waitForSelector(searchedFor);
-    // await page.click(searchedFor);
-
-    // await page.waitFor(9000);
+  it("searches for people", async () => {
+    await profilePage.search();
   });
 
-  xit("should get information of the profile", async () => {
-    //user .innerText on this
-    const profileName = profile.name;
-
-    //user .innerText on this
-    const accountName = profile.account;
-
-    //user .textContent on this
-    const bio = profile.bio;
-
-    //user .innerText on this
-    const location = profile.location;
-
-    //user .innerText on this
-    const personalSite = profile.personalSiteUrl;
-
-    //user .innerText on this
-    const joinDate = profile.joinDate;
-
-    const navInformation = profile.navInformation;
-
-    await page.waitForSelector(navInformation);
-    await page.waitForSelector(profileName);
-    await page.waitForSelector(bio);
-    await page.waitForSelector(location);
-    await page.waitForSelector(personalSite);
-    await page.waitForSelector(joinDate);
-
-    let numberOfActions = await page.evaluate(navInformation => {
-      let information = [];
-      // get the information of tweets, followers, likes, and the humber of people the user follows.
-      const numberOfACtions = document.querySelectorAll(navInformation);
-
-      // get the data in variables
-      const tweetNumber = numberOfACtions[0].innerText;
-      const followingNumber = numberOfACtions[1].innerText;
-      const followersNumber = numberOfACtions[2].innerText;
-      const likesNumber = numberOfACtions[3].innerText;
-
-      //puts the data inside and object
-      const tweets = { Tweets: tweetNumber };
-      const following = { Following: followingNumber };
-      const followers = { Followers: followersNumber };
-      const likes = { Likes: likesNumber };
-
-      //push the data to a json
-      information.push(tweets);
-      information.push(following);
-      information.push(followers);
-      information.push(likes);
-
-      return JSON.parse(JSON.stringify(information));
-    }, navInformation);
-
-    var accountData = await page.evaluate(
-      ({ profileName, accountName, bio, location, personalSite, joinDate }) => {
-        let information = [];
-        // get the information of the name, account name, description, location, site and date the account was made of the searched profile
-
-        // put the data inside variables
-
-        //use .innerText on this
-        const name = document.querySelector(profileName).innerText;
-        const account = document.querySelector(accountName).innerText;
-        const biography = document.querySelector(bio).textContent;
-        const localitation = document.querySelector(location).innerText;
-        const site = document.querySelector(personalSite).innerText;
-        const dateOfCreation = document.querySelector(joinDate).innerText;
-
-        //puts the data inside and object
-        const nameText = { name: name };
-        const accountText = { account: account };
-        const bioText = { bio: biography };
-        const localitationText = { localitation: localitation };
-        const siteText = { site: site };
-        const dateText = { date: dateOfCreation };
-
-        //push the data to a json
-        information.push(nameText);
-        information.push(accountText);
-        information.push(bioText);
-        information.push(localitationText);
-        information.push(siteText);
-        information.push(dateText);
-
-        return JSON.parse(JSON.stringify(information));
-      },
-      { profileName, accountName, bio, location, personalSite, joinDate }
-    );
-    console.log(numberOfActions);
-    console.log(accountData);
+  it("should get information of the profile", async () => {
+    let data = await profilePage.getData();
+    console.log(data);
   });
 
   //takes a screenshot of the element
