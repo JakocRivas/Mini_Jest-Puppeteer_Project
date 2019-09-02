@@ -8,49 +8,53 @@ const post = require("./PO/CommentTwitter/post");
 // const search = require("../PageObjects/Twitter/PO/SearchTwitter/search");
 // const profile = require("../PageObjects/Twitter/PO/ProfileTwitter/profile");
 // const common = require("../resources/common");
-function makeid(length) {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
+let makeid = require("../../resources/createComment");
+// function makeid(length) {
+//   var result = "";
+//   var characters =
+//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//   var charactersLength = characters.length;
+//   for (var i = 0; i < length; i++) {
+//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//   }
+//   return result;
+// }
 
 class HomePage {
-  constructor(page) {
-    this.page = page;
+  constructor() {
+    this.commentBox = commentBox;
+    this.timeline = timeline;
+    this.post = post;
+    this.makeComment = makeid(5);
   }
   async postMessage() {
-    const commentBoxTimeline = commentBox.timeline;
+    const commentBoxTimeline = this.commentBox.timeline;
 
     await page.waitForSelector(commentBoxTimeline);
     await page.click(commentBoxTimeline);
 
-    let comment = makeid(5);
+    let comment = this.makeComment;
     await page.waitFor(3000);
     await page.type(commentBoxTimeline, comment);
 
     await page.waitFor(3000);
 
-    const sendMessageButton = commentBox.sendMessage;
+    const sendMessageButton = this.commentBox.sendMessage;
     await page.waitForSelector(sendMessageButton);
 
     await page.click(sendMessageButton);
 
-    await page.waitForSelector(timeline.comment);
+    await page.waitForSelector(this.timeline.comment);
   }
 
   async deleteMessage() {
-    const downArrow = post.downArrow;
+    const downArrow = this.post.downArrow;
 
     await page.waitForSelector(downArrow);
 
     await page.click(downArrow);
 
-    const deleteButton = post.deleteButton;
+    const deleteButton = this.post.deleteButton;
 
     await page.waitFor(1000);
 
@@ -58,7 +62,7 @@ class HomePage {
 
     await page.click(deleteButton);
 
-    const deleButtonModal = post.deleButtonModal;
+    const deleButtonModal = this.post.deleButtonModal;
 
     await page.waitForSelector(deleButtonModal, { visible: true });
 

@@ -8,35 +8,41 @@
 const search = require("./PO/SearchTwitter/search");
 const profile = require("./PO/ProfileTwitter/profile");
 const common = require("../../resources/common");
+let makeid = require("../../resources/createComment");
 
-function makeid(length) {
-  var result = "";
-  var characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  var charactersLength = characters.length;
-  for (var i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * charactersLength));
-  }
-  return result;
-}
+// function makeid(length) {
+//   var result = "";
+//   var characters =
+//     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+//   var charactersLength = characters.length;
+//   for (var i = 0; i < length; i++) {
+//     result += characters.charAt(Math.floor(Math.random() * charactersLength));
+//   }
+//   return result;
+// }
 
 class ProfilePage {
   constructor(page) {
-    this.page = page;
+    this.searchBar = search.searchBar;
+    this.person = common.searchTwitter;
+    this.searchedPerson = search.searchedPerson;
+    this.jpg = profile.avatar;
+    this.path = common.imgPath;
+    this.makeComment = makeid(5);
   }
 
   async search() {
-    const searchBar = search.searchBar;
+    const searchBar = this.searchBar;
 
     await page.waitForSelector(searchBar);
 
     await page.click(searchBar);
-    const person = common.searchTwitter;
+    const person = this.person;
 
     await page.type(searchBar, person);
     await page.waitFor(2000);
 
-    const searchedPerson = search.searchedPerson;
+    const searchedPerson = this.searchedPerson;
 
     await page.waitForSelector(searchedPerson);
 
@@ -141,7 +147,7 @@ class ProfilePage {
   }
   async sayCheese() {
     //download
-    const jpg = profile.avatar;
+    const jpg = this.jpg;
     await page.waitForSelector(jpg);
     const imgSrc = await page.$eval(jpg, img => img.getAttribute("src"));
 
@@ -150,12 +156,12 @@ class ProfilePage {
     //   omitBackground: true
     // });
 
-    const imageName = makeid(5);
+    const imageName = this.makeComment;
 
     const http = require("https");
     const fs = require("fs");
 
-    const file = fs.createWriteStream(common.imgPath + imageName + ".jpg");
+    const file = fs.createWriteStream(this.path + imageName + ".jpg");
     const request = http.get(imgSrc, function(response) {
       response.pipe(file);
     });

@@ -48,53 +48,14 @@ describe("Twitter", () => {
 
     const timeline = await loginPage.waitForHome();
     await expect(timeline).toBe("Home");
-  });
+  }, 90000);
 
   it("should post a message", async () => {
     await homePage.postMessage();
-
-    // const commentBoxTimeline = commentBox.timeline;
-    // await page.waitForSelector(commentBoxTimeline);
-    // await page.click(commentBoxTimeline);
-
-    // let comment = makeid(5);
-    // await page.waitFor(3000);
-    // await page.type(commentBoxTimeline, comment);
-
-    // await page.waitFor(3000);
-
-    // const sendMessageButton = commentBox.sendMessage;
-    // await page.waitForSelector(sendMessageButton);
-
-    // await page.click(sendMessageButton);
-
-    // await page.waitForSelector(timeline.comment);
   }, 9000);
 
   it("should delete message", async () => {
     await homePage.deleteMessage();
-
-    // const downArrow = post.downArrow;
-
-    // await page.waitForSelector(downArrow);
-
-    // await page.click(downArrow);
-
-    // const deleteButton = post.deleteButton;
-
-    // await page.waitFor(1000);
-
-    // await page.waitForSelector(deleteButton);
-
-    // await page.click(deleteButton);
-
-    // const deleButtonModal = post.deleButtonModal;
-
-    // await page.waitForSelector(deleButtonModal, { visible: true });
-
-    // await page.click(deleButtonModal);
-
-    // await page.waitFor(2000);
   });
 
   it("searches for people", async () => {
@@ -107,7 +68,7 @@ describe("Twitter", () => {
   });
 
   //takes a screenshot of the element
-  it("should download profile image", async () => {
+  xit("should download profile image", async () => {
     await profilePage.sayCheese();
   });
 });
