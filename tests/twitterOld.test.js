@@ -40,54 +40,14 @@ describe("Twitter", () => {
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
-    // const h1 = await page.$eval(header.h1Selector, text => text.textContent);
-    // console.log(h1);
-    // expect(h1).toBe(header.h1Text);
-    // let loginPage = new LoginPage();
-    // let nrp = await loginPage.waitForHeader();
     await loginPage.waitForHeader();
-    // console.log(nrp);
-
-    // await LoginPage.waitForHeader;
   });
 
   it("should log in and check if redirects to the timeline", async () => {
-    // loginPage = new LoginPage();
     await loginPage.login();
 
     const timeline = await loginPage.waitForHome();
     await expect(timeline).toBe("Home");
-
-    // const email = common.email;
-    // const password = common.password;
-
-    // const emailField = loginFields.emailField;
-    // const passwordField = loginFields.passwordField;
-
-    // const loginButton = submitButton.selector;
-
-    // const loginFieldbutton = loginFormButton.selector;
-
-    // await page.waitForSelector(loginButton);
-    // await page.click(loginButton);
-
-    // await page.waitForSelector(emailField);
-    // await page.waitForSelector(passwordField);
-
-    // await page.type(emailField, email);
-    // await page.type(passwordField, password);
-
-    // await page.waitForSelector(loginFieldbutton);
-    // await page.click(loginFieldbutton);
-
-    // const home = header.home;
-    // await page.waitForSelector(home);
-
-    // const timeline = await page.evaluate(home => {
-    //   return document.querySelector(home).textContent;
-    // }, home);
-
-    // expect(timeline).toBe("Home");
   });
 
   it("should post a message", async () => {
@@ -147,25 +107,7 @@ describe("Twitter", () => {
   });
 
   //takes a screenshot of the element
-  xit("should download profile image", async () => {
-    //download
-    const jpg = "img.ProfileAvatar-image";
-    await page.waitForSelector(jpg);
-    const imgSrc = await page.$eval(jpg, img => img.getAttribute("src"));
-
-    // await img.screenshot({
-    //   path: "profile-img-screenshot.jpg",
-    //   omitBackground: true
-    // });
-
-    const imageName = makeid(5);
-
-    const http = require("https");
-    const fs = require("fs");
-
-    const file = fs.createWriteStream(common.imgPath + imageName + ".jpg");
-    const request = http.get(imgSrc, function(response) {
-      response.pipe(file);
-    });
+  it("should download profile image", async () => {
+    await profilePage.sayCheese();
   });
 });

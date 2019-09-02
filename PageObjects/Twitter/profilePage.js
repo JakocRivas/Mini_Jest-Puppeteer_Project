@@ -9,6 +9,17 @@ const search = require("./PO/SearchTwitter/search");
 const profile = require("./PO/ProfileTwitter/profile");
 const common = require("../../resources/common");
 
+function makeid(length) {
+  var result = "";
+  var characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  var charactersLength = characters.length;
+  for (var i = 0; i < length; i++) {
+    result += characters.charAt(Math.floor(Math.random() * charactersLength));
+  }
+  return result;
+}
+
 class ProfilePage {
   constructor(page) {
     this.page = page;
@@ -127,6 +138,27 @@ class ProfilePage {
     data.push(accountData);
 
     return data;
+  }
+  async sayCheese() {
+    //download
+    const jpg = profile.avatar;
+    await page.waitForSelector(jpg);
+    const imgSrc = await page.$eval(jpg, img => img.getAttribute("src"));
+
+    // await img.screenshot({
+    //   path: "profile-img-screenshot.jpg",
+    //   omitBackground: true
+    // });
+
+    const imageName = makeid(5);
+
+    const http = require("https");
+    const fs = require("fs");
+
+    const file = fs.createWriteStream(common.imgPath + imageName + ".jpg");
+    const request = http.get(imgSrc, function(response) {
+      response.pipe(file);
+    });
   }
 }
 

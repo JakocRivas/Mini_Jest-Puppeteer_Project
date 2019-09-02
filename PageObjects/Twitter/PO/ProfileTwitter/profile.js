@@ -17,5 +17,6 @@ module.exports = {
     "#page-container .AppContainer .ProfileSidebar .ProfileHeaderCard-joinDate",
 
   navInformation:
-    '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value'
+    '#page-outer  .AppContainer .ProfileCanopy-nav div[role="navigation"].ProfileNav span.ProfileNav-value',
+  avatar: "img.ProfileAvatar-image"
 };
