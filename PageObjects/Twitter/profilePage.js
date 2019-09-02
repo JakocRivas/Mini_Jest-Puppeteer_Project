@@ -11,6 +11,7 @@ class ProfilePage {
     this.jpg = profile.avatar;
     this.path = common.imgPath;
     this.makeComment = makeid(5);
+    this.profile = profile;
   }
 
   async search() {
@@ -35,24 +36,24 @@ class ProfilePage {
   async getData() {
     let data = [];
     //user .innerText on this
-    const profileName = profile.name;
+    const profileName = this.profile.name;
 
     //user .innerText on this
-    const accountName = profile.account;
+    const accountName = this.profile.account;
 
     //user .textContent on this
-    const bio = profile.bio;
+    const bio = this.profile.bio;
 
     //user .innerText on this
-    const location = profile.location;
+    const location = this.profile.location;
 
     //user .innerText on this
-    const personalSite = profile.personalSiteUrl;
+    const personalSite = this.profile.personalSiteUrl;
 
     //user .innerText on this
-    const joinDate = profile.joinDate;
+    const joinDate = this.profile.joinDate;
 
-    const navInformation = profile.navInformation;
+    const navInformation = this.profile.navInformation;
 
     await page.waitForSelector(navInformation);
     await page.waitForSelector(profileName);
