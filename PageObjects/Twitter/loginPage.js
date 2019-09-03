@@ -3,6 +3,7 @@ const loginFields = require("./PO/LoginTwitter/loginForm");
 const loginFormButton = require("./PO/LoginTwitter/submitButton");
 const submitButton = require("./PO/LoginTwitter/loginButton");
 const common = require("../../resources/common");
+const logoutSelectors = require("./PO/LoginTwitter/logoutTwitter");
 
 class LoginPage {
   constructor() {
@@ -13,6 +14,7 @@ class LoginPage {
     this.passwordField = loginFields.passwordField;
     this.loginButton = submitButton.selector;
     this.buttonSelector = loginFormButton.selector;
+    this.logoutSelector = logoutSelectors;
   }
 
   //Waits for the h1 of the landing page to be loaded
@@ -61,6 +63,22 @@ class LoginPage {
 
     // expect(timeline).toBe("Home");
     return timeline;
+  }
+
+  async logout() {
+    const profileAndSettings = this.logoutSelector.profileAndSettings;
+    const logoutButton = this.logoutSelector.logoutButton;
+
+    await page.waitForSelector(profileAndSettings);
+    await page.click(profileAndSettings);
+    await page.waitForSelector(logoutButton);
+
+    await Promise.all([
+      page.click(logoutButton),
+      page.waitForNavigation({ waitUntil: "networkidle0" })
+    ]); //.catch(() => {
+    // console.log("some error");
+    // });
   }
 }
 

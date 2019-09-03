@@ -52,12 +52,7 @@ describe("Twitter", () => {
   });
 
   it("should log out", async () => {
-    const profileAndSettings =
-      "#doc .container .pull-right .me a[role='button']";
-    const logoutButton = "#doc .container .pull-right .me  #signout-button";
-    page.waitForSelector(profileAndSettings);
-    page.click(profileAndSettings);
-    page.waitForSelector(logoutButton);
-    page.click(logoutButton);
-  });
+    await loginPage.logout();
+    // await page.waitFor(80000);
+  }, 80000);
 });
