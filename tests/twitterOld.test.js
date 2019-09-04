@@ -28,7 +28,7 @@ describe("Twitter", () => {
 
     const timeline = await loginPage.waitForHome();
     await expect(timeline).toBe("Home");
-  });
+  }, 8000);
 
   it("should post a message", async () => {
     await homePage.postMessage();
@@ -53,6 +53,7 @@ describe("Twitter", () => {
   });
 
   it("should log out", async () => {
+    await page.waitFor(2000);
     await loginPage.logout();
     await page.waitFor(2000);
     await loginPage.waitForHeader();
