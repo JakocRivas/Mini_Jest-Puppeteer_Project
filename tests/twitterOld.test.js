@@ -23,36 +23,36 @@ describe("Twitter", () => {
     await loginPage.waitForHeader();
   });
 
-  xit("should log in and check if redirects to the timeline", async () => {
+  it("should log in and check if redirects to the timeline", async () => {
     await loginPage.login(common.email, common.password);
 
     const timeline = await loginPage.waitForHome();
     await expect(timeline).toBe("Home");
-  }, 90000);
+  });
 
-  xit("should post a message", async () => {
+  it("should post a message", async () => {
     await homePage.postMessage();
-  }, 9000);
+  }, 8000);
 
-  xit("should delete message", async () => {
+  it("should delete message", async () => {
     await homePage.deleteMessage();
   });
 
-  xit("searches for people", async () => {
+  it("searches for people", async () => {
     await profilePage.search();
   });
 
-  xit("should get information of the profile", async () => {
+  it("should get information of the profile", async () => {
     let data = await profilePage.getData();
     console.log(data);
   });
 
   //takes a screenshot of the element
-  xit("should download profile image", async () => {
+  it("should download profile image", async () => {
     await profilePage.sayCheese();
   });
 
-  xit("should log out", async () => {
+  it("should log out", async () => {
     await loginPage.logout();
     await page.waitFor(2000);
     await loginPage.waitForHeader();
