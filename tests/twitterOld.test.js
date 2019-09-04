@@ -1,6 +1,7 @@
 const LoginPage = require("../PageObjects/Twitter/loginPage");
 const HomePage = require("../PageObjects/Twitter/homepage");
 const ProfilePage = require("../PageObjects/Twitter/profilePage");
+const common = require("../resources/common");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
@@ -22,39 +23,46 @@ describe("Twitter", () => {
     await loginPage.waitForHeader();
   });
 
-  it("should log in and check if redirects to the timeline", async () => {
-    await loginPage.login();
+  xit("should log in and check if redirects to the timeline", async () => {
+    await loginPage.login(common.email, common.password);
 
     const timeline = await loginPage.waitForHome();
     await expect(timeline).toBe("Home");
   }, 90000);
 
-  it("should post a message", async () => {
+  xit("should post a message", async () => {
     await homePage.postMessage();
   }, 9000);
 
-  it("should delete message", async () => {
+  xit("should delete message", async () => {
     await homePage.deleteMessage();
   });
 
-  it("searches for people", async () => {
+  xit("searches for people", async () => {
     await profilePage.search();
   });
 
-  it("should get information of the profile", async () => {
+  xit("should get information of the profile", async () => {
     let data = await profilePage.getData();
     console.log(data);
   });
 
   //takes a screenshot of the element
-  it("should download profile image", async () => {
+  xit("should download profile image", async () => {
     await profilePage.sayCheese();
   });
 
-  it("should log out", async () => {
+  xit("should log out", async () => {
     await loginPage.logout();
-    // await page.waitFor(80000);
+    await page.waitFor(2000);
+    await loginPage.waitForHeader();
   }, 80000);
 
-  it("should fail to log in", async () => {});
+  it("should fail to log in", async () => {
+    await loginPage.login(common.wrongEmail, common.wrongPassword);
+    let logError = await loginPage.loginError();
+    await expect(logError).toBe(
+      "The username and password you entered did not match our records. Please double-check and try again."
+    );
+  });
 });

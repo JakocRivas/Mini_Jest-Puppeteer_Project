@@ -28,9 +28,9 @@ class LoginPage {
   }
 
   //Logins to twitter
-  async login() {
-    const email = this.email;
-    const password = this.password;
+  async login(email, password) {
+    // const email = email;
+    // const password = password;
 
     const emailField = this.emailField;
     const passwordField = this.passwordField;
@@ -79,6 +79,16 @@ class LoginPage {
     ]); //.catch(() => {
     // console.log("some error");
     // });
+  }
+
+  async loginError() {
+    const errorMessage = "div.alert-messages .message .message-text";
+    await page.waitForSelector(errorMessage);
+
+    const element = await page.$(errorMessage);
+    const text = await page.evaluate(element => element.textContent, element);
+
+    return text;
   }
 }
 
