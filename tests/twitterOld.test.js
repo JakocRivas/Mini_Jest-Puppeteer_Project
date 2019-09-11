@@ -11,7 +11,7 @@ const common = require("../resources/common");
 describe("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
-    await page.setViewport({ width: 1366, height: 768 });
+    await page.setViewport({ width: 1920, height: 1080 });
   });
   beforeAll(async () => {
     loginPage = new LoginPage();
