@@ -3,7 +3,7 @@ const LoginPage = require("../PageObjects/Twitter/loginPage"),
   ProfilePage = require("../PageObjects/Twitter/profilePage"),
   common = require("../resources/common"),
   { h1Text } = require("../PageObjects/Twitter/PO/LoginTwitter/h1");
-
+//describe
 describe("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
