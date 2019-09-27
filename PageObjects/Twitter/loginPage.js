@@ -29,9 +29,6 @@ class LoginPage {
 
   //Logins to twitter
   async login(email, password) {
-    // const email = email;
-    // const password = password;
-
     const emailField = this.emailField;
     const passwordField = this.passwordField;
 
@@ -76,9 +73,7 @@ class LoginPage {
     await Promise.all([
       page.click(logoutButton),
       page.waitForNavigation({ waitUntil: "networkidle0" })
-    ]); //.catch(() => {
-    // console.log("some error");
-    // });
+    ]);
   }
 
   async loginError() {

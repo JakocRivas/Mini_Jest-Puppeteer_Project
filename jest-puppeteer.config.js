@@ -1,11 +1,8 @@
 module.exports = {
   launch: {
-    headless: true,
+    headless: false,
     // slowMo: 250,
-    args: ["--lang=en-US,bn"]
+    defaultViewport: null,
+    args: ["--lang=en-US,bn", "--window-size=1920,1080"]
   }
-  // globalSetup: "jest-environment-puppeteer/setup",
-  // globalTeardown: "jest-environment-puppeteer/teardown",
-  // testEnvironment: "jest-environment-puppeteer",
-  // setupTestFrameworkScriptFile: "expect-puppeteer"
 };
