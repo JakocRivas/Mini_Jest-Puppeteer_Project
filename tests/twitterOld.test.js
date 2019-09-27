@@ -18,6 +18,7 @@ describe("Twitter", () => {
     expect(header).toBe(h1Text);
   });
 
+  //logs in and waits for the timeline to be logged
   it("should log in and check if redirects to the timeline", async () => {
     await loginPage.login(common.email, common.password);
 
@@ -25,18 +26,22 @@ describe("Twitter", () => {
     expect(timeline).toBe("Home");
   }, 8000);
 
+  //post a messages on the timeline
   xit("should post a message", async () => {
     await homePage.postMessage();
   }, 8000);
 
+  //deletes message on the timeline
   xit("should delete message", async () => {
     await homePage.deleteMessage();
   });
 
+  //search user on the search bar and enters to his profile
   xit("searches for people", async () => {
     await profilePage.search();
   });
 
+  //scrap the public information of a profile
   xit("should get information of the profile", async () => {
     let data = await profilePage.getData();
     console.log(data);
@@ -47,6 +52,7 @@ describe("Twitter", () => {
     await profilePage.sayCheese();
   });
 
+  //logs out from twitter dot com
   xit("should log out", async () => {
     await page.waitFor(2000);
     await loginPage.logout();
@@ -54,6 +60,7 @@ describe("Twitter", () => {
     await loginPage.waitForHeader();
   }, 80000);
 
+  //logs in to fail
   xit("should fail to log in", async () => {
     await loginPage.login(common.wrongEmail, common.wrongPassword);
     let logError = await loginPage.loginError();
