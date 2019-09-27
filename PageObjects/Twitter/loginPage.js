@@ -23,7 +23,7 @@ class LoginPage {
       this.header.h1Selector,
       text => text.textContent
     );
-    expect(h1).toBe(this.header.h1Text);
+
     return h1;
   }
 

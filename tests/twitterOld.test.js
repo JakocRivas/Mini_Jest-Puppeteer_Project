@@ -1,14 +1,15 @@
-const LoginPage = require("../PageObjects/Twitter/loginPage");
-const HomePage = require("../PageObjects/Twitter/homepage");
-const ProfilePage = require("../PageObjects/Twitter/profilePage");
-const common = require("../resources/common");
+const LoginPage = require("../PageObjects/Twitter/loginPage"),
+  HomePage = require("../PageObjects/Twitter/homepage"),
+  ProfilePage = require("../PageObjects/Twitter/profilePage"),
+  common = require("../resources/common"),
+  { h1Text } = require("../PageObjects/Twitter/PO/LoginTwitter/h1");
 
 // const testAtrr = (something, attr) => {
 //   const wrapper = `[data-test=''${attr}']`;
 //   return wrapper;
 // };
 
-describe("Twitter", () => {
+describe.only("Twitter", () => {
   beforeAll(async () => {
     await page.goto("https://twitter.com/");
     await page.setViewport({ width: 1920, height: 1080 });
@@ -20,14 +21,15 @@ describe("Twitter", () => {
   });
 
   it('should display "See what’s happening in the world right now" text on page', async () => {
-    await loginPage.waitForHeader();
+    const header = await loginPage.waitForHeader();
+    expect(header).toBe(h1Text);
   });
 
   it("should log in and check if redirects to the timeline", async () => {
     await loginPage.login(common.email, common.password);
 
     const timeline = await loginPage.waitForHome();
-    await expect(timeline).toBe("Home");
+    expect(timeline).toBe("Home");
   }, 8000);
 
   it("should post a message", async () => {
