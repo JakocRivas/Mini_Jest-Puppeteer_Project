@@ -27,33 +27,33 @@ describe("Twitter", () => {
   }, 8000);
 
   //post a messages on the timeline
-  xit("should post a message", async () => {
+  it("should post a message", async () => {
     await homePage.postMessage();
   }, 8000);
 
   //deletes message on the timeline
-  xit("should delete message", async () => {
+  it("should delete message", async () => {
     await homePage.deleteMessage();
   });
 
   //search user on the search bar and enters to his profile
-  xit("searches for people", async () => {
+  it("searches for people", async () => {
     await profilePage.search();
   });
 
   //scrap the public information of a profile
-  xit("should get information of the profile", async () => {
+  it("should get information of the profile", async () => {
     let data = await profilePage.getData();
     console.log(data);
   });
 
   //takes a screenshot of the element
-  xit("should download profile image", async () => {
+  it("should download profile image", async () => {
     await profilePage.sayCheese();
   });
 
   //logs out from twitter dot com
-  xit("should log out", async () => {
+  it("should log out", async () => {
     await page.waitFor(2000);
     await loginPage.logout();
     await page.waitFor(2000);
@@ -61,7 +61,7 @@ describe("Twitter", () => {
   }, 80000);
 
   //logs in to fail
-  xit("should fail to log in", async () => {
+  it("should fail to log in", async () => {
     await loginPage.login(common.wrongEmail, common.wrongPassword);
     let logError = await loginPage.loginError();
     await expect(logError).toBe(
