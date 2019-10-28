@@ -42,7 +42,7 @@ class LoginPage {
     await page.waitForSelector(emailField);
     await page.type(emailField, email);
     await page.waitForSelector(passwordField);
-    page.click(passwordField);
+    await page.click(passwordField);
     await page.type(passwordField, password);
 
     await page.waitForSelector(loginFieldbutton);
